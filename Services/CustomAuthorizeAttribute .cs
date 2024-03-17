@@ -15,7 +15,7 @@ public class CustomAuthorizeAttribute : TypeFilterAttribute
             {
                
                 context.Result = new RedirectResult("~/Account/Login");
-                context.HttpContext.Items["ErrorMessage"] = "Please log in to access this page.";
+                context.HttpContext.Items["ErrorMessage"] = "Please log in to access this page. ";
 
             }
             else
