@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using NewsApp.Interface;
 using NewsApp.Models;
 using NewsApp.ViewModels;
+using System.Data;
 
 
 namespace NewsApp.Controllers
@@ -17,7 +19,7 @@ namespace NewsApp.Controllers
             _categoriesRepository = categoriesRepository;
         }
 
-
+        
         public async Task<IActionResult> Index()
         {
             var News = await _newsRepository.GetAllAsync();
@@ -73,6 +75,7 @@ namespace NewsApp.Controllers
 
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id)
         {
             var newsDetails = await _newsRepository.GetByIdAsync(id);
@@ -100,6 +103,7 @@ namespace NewsApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(NewsViewModel newsViewModels)
         {
 
@@ -127,7 +131,7 @@ namespace NewsApp.Controllers
 
         }
 
-
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create()
         {
             var data = await _categoriesRepository.GetAllAsync();
@@ -137,6 +141,7 @@ namespace NewsApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public  async Task<IActionResult> Create(NewCreateViewModel newsCreateViewModel)
         {
             
@@ -179,9 +184,9 @@ namespace NewsApp.Controllers
 
         }
 
-        
 
-      
+
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var NewsDetails = await _newsRepository.GetByIdAsync(id);

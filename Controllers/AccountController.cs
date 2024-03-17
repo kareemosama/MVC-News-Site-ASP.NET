@@ -29,6 +29,13 @@ namespace NewsApp.Controllers
             return View(response);
         }
 
+
+        public IActionResult AccessDenied()
+        {
+            
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {

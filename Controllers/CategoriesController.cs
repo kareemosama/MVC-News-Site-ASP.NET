@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using NewsApp.Interface;
 using NewsApp.Models;
 using NewsApp.ViewModels;
+using System.Data;
 
 namespace NewsApp.Controllers
 {
@@ -27,6 +29,7 @@ namespace NewsApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(CategoryViewModel categoryiewModel) {
 
            if (categoryiewModel.NewCategory == null) { TempData["Error"] = "Please Insert Category"; RedirectToAction("Index", "Categories"); }
@@ -47,7 +50,7 @@ namespace NewsApp.Controllers
 
         }
 
-      
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var category = await _categoriesRepository.GetByIdAsync(id);
